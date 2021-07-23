@@ -8,19 +8,22 @@
 import Foundation
 import UIKit
 
-class ProfileHeaderView: UIView, UITextViewDelegate {
+class ProfileHeaderView: UIView, UITextFieldDelegate {
         
     let avatarImageView = UIImageView()
     let userNameLabel = UILabel()
     let userStatusButton = UIButton()
-    let userStatusTextView = UITextView()
+    let userStatusLabel = UILabel()
+    let userStatusTextField = UITextField()
+    private var statusText = String()
     
     override init(frame: CGRect) {
         super.init(frame: frame)
         self.addSubview(avatarImageView)
         self.addSubview(userNameLabel)
         self.addSubview(userStatusButton)
-        self.addSubview(userStatusTextView)
+        self.addSubview(userStatusLabel)
+        self.addSubview(userStatusTextField)
     }
     
     required init?(coder: NSCoder) {
@@ -41,8 +44,8 @@ class ProfileHeaderView: UIView, UITextViewDelegate {
         userNameLabel.font = UIFont.systemFont(ofSize: 18, weight: .bold)
         userNameLabel.textColor = .black
         
-        userStatusButton.frame = CGRect(x: safeAreaInsets.left + 16, y: avatarImageView.frame.maxY + 16, width: self.bounds.width - 32, height: 50)
-        userStatusButton.setTitle("Show status", for: .normal)
+        userStatusButton.frame = CGRect(x: safeAreaInsets.left + 16, y: avatarImageView.frame.maxY + 56, width: self.bounds.width - 32, height: 50)
+        userStatusButton.setTitle("Set status", for: .normal)
         userStatusButton.setTitleColor(.white, for: .normal)
         userStatusButton.backgroundColor = .systemBlue
         userStatusButton.layer.cornerRadius = 4
@@ -50,27 +53,38 @@ class ProfileHeaderView: UIView, UITextViewDelegate {
         userStatusButton.layer.shadowRadius = 4
         userStatusButton.layer.shadowColor = UIColor.black.cgColor
         userStatusButton.layer.shadowOpacity = 0.7
-        userStatusButton.addTarget(self, action: #selector(onStatusClick), for: .touchUpInside)
+        userStatusButton.addTarget(self, action: #selector(onSetStatus), for: .touchUpInside)
         
-        userStatusTextView.frame = CGRect(x: avatarImageView.frame.maxX + 20, y: userStatusButton.frame.minY - 59, width: self.bounds.width - 202, height: 25)
-        userStatusTextView.font = UIFont.systemFont(ofSize: 14, weight: .regular)
-        userStatusTextView.text = "Waiting for something..."
-        userStatusTextView.textColor = .gray
-        userStatusTextView.backgroundColor = .clear
-        userStatusTextView.delegate = self
+        userStatusLabel.frame = CGRect(x: avatarImageView.frame.maxX + 20, y: userStatusButton.frame.minY - 99, width: self.bounds.width - 202, height: 25)
+        userStatusLabel.font = UIFont.systemFont(ofSize: 14, weight: .regular)
+        userStatusLabel.text = "Set up status"
+        userStatusLabel.textColor = .gray
+        
+        userStatusTextField.frame = CGRect(x: avatarImageView.frame.maxX + 20, y: userStatusLabel.frame.minY + 30, width: self.bounds.width - 202, height: 40)
+        userStatusTextField.font = UIFont.systemFont(ofSize: 15, weight: .regular)
+        userStatusTextField.text = "Waiting for something..."
+        userStatusTextField.textColor = .gray
+        userStatusTextField.backgroundColor = .white
+        userStatusTextField.layer.cornerRadius = 12
+        userStatusTextField.layer.borderColor = UIColor.black.cgColor
+        userStatusTextField.layer.borderWidth = 1
+        userStatusTextField.layer.sublayerTransform = CATransform3DMakeTranslation(5, 0, 0)
+        userStatusTextField.delegate = self
+        userStatusTextField.addTarget(self, action: #selector(statusTextChanged), for: .editingChanged)
     }
     
-    func textViewDidBeginEditing(_ textView: UITextView) {
-        if userStatusTextView.text == "Waiting for something..." {
-            userStatusTextView.text = nil
-            userStatusTextView.textColor = .black
+    func textFieldDidBeginEditing(_ textField: UITextField) {
+        if userStatusTextField.text == "Waiting for something..." {
+            userStatusTextField.text = nil
+            userStatusTextField.textColor = .black
         }
     }
     
-    func textViewDidEndEditing(_ textView: UITextView) {
-        if userStatusTextView.text.isEmpty {
-            userStatusTextView.text = "Waiting for something..."
-            userStatusTextView.textColor = .gray
+    func textFieldDidEndEditing(_ textField: UITextField) {
+        if let text = userStatusTextField.text, text.isEmpty {
+            userStatusTextField.text = "Waiting for something..."
+            userStatusTextField.textColor = .gray
+            userStatusLabel.text = "Set up status"
         }
     }
     
@@ -78,27 +92,25 @@ class ProfileHeaderView: UIView, UITextViewDelegate {
         if touches.first != nil {
             self.endEditing(true)
         }
-        super.touchesBegan(touches, with: event)
     }
     
-    func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
-        if text == "\n" {
-            userStatusTextView.resignFirstResponder()
-            return false
-        }
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        userStatusTextField.resignFirstResponder()
         return true
     }
-
+    
     override func hitTest(_ point: CGPoint, with event: UIEvent?) -> UIView? {
         return super.hitTest(point, with: event)
     }
     
-    @objc func onStatusClick() {
-        if userStatusTextView.text.isEmpty {
-            print("No status")
-        } else {
-            print(userStatusTextView.text.description)
+    @objc func statusTextChanged() {
+        if let text = userStatusTextField.text, !text.isEmpty {
+            statusText = text
         }
+    }
+    
+    @objc func onSetStatus() {
+        userStatusLabel.text = statusText
         self.endEditing(true)
     }
 }
