@@ -99,10 +99,6 @@ class ProfileHeaderView: UIView, UITextFieldDelegate {
         return true
     }
     
-    override func hitTest(_ point: CGPoint, with event: UIEvent?) -> UIView? {
-        return super.hitTest(point, with: event)
-    }
-    
     @objc func statusTextChanged() {
         if let text = userStatusTextField.text, !text.isEmpty {
             statusText = text
