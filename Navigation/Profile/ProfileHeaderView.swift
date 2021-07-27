@@ -11,56 +11,64 @@ import UIKit
 class ProfileHeaderView: UIView, UITextFieldDelegate {
         
     let avatarImageView = UIImageView()
-    let userNameLabel = UILabel()
-    let userStatusButton = UIButton()
+    let fullNameLabel = UILabel()
+    let setStatusButton = UIButton()
     let userStatusLabel = UILabel()
     let userStatusTextField = UITextField()
     private var statusText = String()
-    
-    override init(frame: CGRect) {
-        super.init(frame: frame)
+
+    override func willMove(toSuperview newSuperview: UIView?) {
         self.addSubview(avatarImageView)
-        self.addSubview(userNameLabel)
-        self.addSubview(userStatusButton)
-        self.addSubview(userStatusLabel)
-        self.addSubview(userStatusTextField)
-    }
-    
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-    
-    override func layoutSubviews() {
         avatarImageView.image = UIImage(named: "avatarImage")
-        avatarImageView.frame = CGRect(x: safeAreaInsets.left + 16, y: safeAreaInsets.top + 16, width: 150, height: 150)
-        avatarImageView.layer.cornerRadius = 75
+        avatarImageView.layer.cornerRadius = 55
         avatarImageView.contentMode = .scaleAspectFill
         avatarImageView.layer.masksToBounds = true
         avatarImageView.layer.borderWidth = 3
         avatarImageView.layer.borderColor = UIColor.white.cgColor
-        
-        userNameLabel.text = "Cat Danya"
-        userNameLabel.frame = CGRect(x: avatarImageView.frame.maxX + 20, y: safeAreaInsets.top + 27, width: self.bounds.width - 32, height: 25)
-        userNameLabel.font = UIFont.systemFont(ofSize: 18, weight: .bold)
-        userNameLabel.textColor = .black
-        
-        userStatusButton.frame = CGRect(x: safeAreaInsets.left + 16, y: avatarImageView.frame.maxY + 56, width: self.bounds.width - 32, height: 50)
-        userStatusButton.setTitle("Set status", for: .normal)
-        userStatusButton.setTitleColor(.white, for: .normal)
-        userStatusButton.backgroundColor = .systemBlue
-        userStatusButton.layer.cornerRadius = 4
-        userStatusButton.layer.shadowOffset = CGSize(width: 4, height: 4)
-        userStatusButton.layer.shadowRadius = 4
-        userStatusButton.layer.shadowColor = UIColor.black.cgColor
-        userStatusButton.layer.shadowOpacity = 0.7
-        userStatusButton.addTarget(self, action: #selector(onSetStatus), for: .touchUpInside)
-        
-        userStatusLabel.frame = CGRect(x: avatarImageView.frame.maxX + 20, y: userStatusButton.frame.minY - 99, width: self.bounds.width - 202, height: 25)
-        userStatusLabel.font = UIFont.systemFont(ofSize: 14, weight: .regular)
-        userStatusLabel.text = "Set up status"
-        userStatusLabel.textColor = .gray
-        
-        userStatusTextField.frame = CGRect(x: avatarImageView.frame.maxX + 20, y: userStatusLabel.frame.minY + 30, width: self.bounds.width - 202, height: 40)
+        avatarImageView.translatesAutoresizingMaskIntoConstraints = false
+        [
+            avatarImageView.leadingAnchor.constraint(equalTo: safeAreaLayoutGuide.leadingAnchor, constant: 16),
+            avatarImageView.heightAnchor.constraint(equalToConstant: 110),
+            avatarImageView.widthAnchor.constraint(equalToConstant: 110),
+            avatarImageView.topAnchor.constraint(equalTo: self.topAnchor, constant: 16)
+        ]
+        .forEach {
+            $0.isActive = true
+        }
+        self.addSubview(fullNameLabel)
+        fullNameLabel.text = "Cat Danya"
+        fullNameLabel.font = UIFont.systemFont(ofSize: 18, weight: .bold)
+        fullNameLabel.textColor = .black
+        fullNameLabel.translatesAutoresizingMaskIntoConstraints = false
+        [
+            fullNameLabel.leadingAnchor.constraint(equalTo: avatarImageView.trailingAnchor, constant: 16),
+            fullNameLabel.trailingAnchor.constraint(equalTo: safeAreaLayoutGuide.trailingAnchor, constant: -16),
+            fullNameLabel.topAnchor.constraint(equalTo: self.topAnchor, constant: 16)
+        ]
+        .forEach {
+            $0.isActive = true
+        }
+        self.addSubview(setStatusButton)
+        setStatusButton.setTitle("Set status", for: .normal)
+        setStatusButton.setTitleColor(.white, for: .normal)
+        setStatusButton.backgroundColor = .systemBlue
+        setStatusButton.layer.cornerRadius = 4
+        setStatusButton.layer.shadowOffset = CGSize(width: 4, height: 4)
+        setStatusButton.layer.shadowRadius = 4
+        setStatusButton.layer.shadowColor = UIColor.black.cgColor
+        setStatusButton.layer.shadowOpacity = 0.7
+        setStatusButton.addTarget(self, action: #selector(onSetStatus), for: .touchUpInside)
+        setStatusButton.translatesAutoresizingMaskIntoConstraints = false
+        [
+            setStatusButton.leadingAnchor.constraint(equalTo: safeAreaLayoutGuide.leadingAnchor, constant: 16),
+            setStatusButton.trailingAnchor.constraint(equalTo: safeAreaLayoutGuide.trailingAnchor, constant: -16),
+            setStatusButton.topAnchor.constraint(equalTo: avatarImageView.bottomAnchor, constant: 44),
+            setStatusButton.heightAnchor.constraint(equalToConstant: 50)
+        ]
+        .forEach {
+            $0.isActive = true
+        }
+        self.addSubview(userStatusTextField)
         userStatusTextField.font = UIFont.systemFont(ofSize: 15, weight: .regular)
         userStatusTextField.text = "Waiting for something..."
         userStatusTextField.textColor = .gray
@@ -69,8 +77,31 @@ class ProfileHeaderView: UIView, UITextFieldDelegate {
         userStatusTextField.layer.borderColor = UIColor.black.cgColor
         userStatusTextField.layer.borderWidth = 1
         userStatusTextField.layer.sublayerTransform = CATransform3DMakeTranslation(5, 0, 0)
-        userStatusTextField.delegate = self
         userStatusTextField.addTarget(self, action: #selector(statusTextChanged), for: .editingChanged)
+        userStatusTextField.delegate = self
+        userStatusTextField.translatesAutoresizingMaskIntoConstraints = false
+        [
+            userStatusTextField.leadingAnchor.constraint(equalTo: avatarImageView.trailingAnchor, constant: 16),
+            userStatusTextField.trailingAnchor.constraint(equalTo: safeAreaLayoutGuide.trailingAnchor, constant: -16),
+            userStatusTextField.bottomAnchor.constraint(equalTo: setStatusButton.topAnchor, constant: -16),
+            userStatusTextField.heightAnchor.constraint(equalToConstant: 40)
+        ]
+        .forEach {
+            $0.isActive = true
+        }
+        self.addSubview(userStatusLabel)
+        userStatusLabel.font = UIFont.systemFont(ofSize: 14, weight: .regular)
+        userStatusLabel.text = "Set up status"
+        userStatusLabel.textColor = .gray
+        userStatusLabel.translatesAutoresizingMaskIntoConstraints = false
+        [
+            userStatusLabel.leadingAnchor.constraint(equalTo: avatarImageView.trailingAnchor, constant: 16),
+            userStatusLabel.trailingAnchor.constraint(equalTo: safeAreaLayoutGuide.trailingAnchor, constant: -16),
+            userStatusLabel.bottomAnchor.constraint(equalTo: userStatusTextField.topAnchor, constant: -16)
+        ]
+        .forEach {
+            $0.isActive = true
+        }
     }
     
     func textFieldDidBeginEditing(_ textField: UITextField) {
@@ -87,25 +118,28 @@ class ProfileHeaderView: UIView, UITextFieldDelegate {
             userStatusLabel.text = "Set up status"
         }
     }
-    
+    //Скрытие keyboard при нажатии за пределами TextField в ProfileHeaderView
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         if touches.first != nil {
             self.endEditing(true)
         }
     }
-    
+    //Скрытие keyboard при нажатии клавиши Return
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         userStatusTextField.resignFirstResponder()
         return true
     }
-    
+
     @objc func statusTextChanged() {
-        if let text = userStatusTextField.text, !text.isEmpty {
+        if let text = userStatusTextField.text {
             statusText = text
         }
     }
     
     @objc func onSetStatus() {
+        if statusText.isEmpty {
+            statusText = "Set up status"
+        }
         userStatusLabel.text = statusText
         self.endEditing(true)
     }
