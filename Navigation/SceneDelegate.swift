@@ -12,22 +12,28 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     var window: UIWindow?
 
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
+        
         guard let scene = (scene as? UIWindowScene) else { return }
-        
         window = UIWindow(windowScene: scene)
-        
-        let feedVC = FeedViewController()
-        let profileVC = ProfileViewController()
-        
-        let feedNavigationVC = UINavigationController(rootViewController: feedVC)
-        let profileNavigationVC = UINavigationController(rootViewController: profileVC)
+        window?.makeKeyAndVisible()
         
         let tabBarController = UITabBarController()
-        tabBarController.viewControllers = [feedNavigationVC, profileNavigationVC]
-        profileVC.loadViewIfNeeded()
+        
+        let feedVC = FeedViewController()
+        
+        let logInVC = LogInViewController()
+        logInVC.title = "Profile"
+        
+        let feedNavigationVC = UINavigationController(rootViewController: feedVC)
+        feedNavigationVC.tabBarItem = UITabBarItem(title: "Feed", image: UIImage(named: "feed"), tag: 0)
+        
+        let logInNavigationVC = UINavigationController(rootViewController: logInVC)
+        logInNavigationVC.isNavigationBarHidden = true
+        logInNavigationVC.tabBarItem = UITabBarItem(title: "Profile", image: UIImage(named: "profile"), tag: 1)
+        
+        tabBarController.viewControllers = [feedNavigationVC, logInNavigationVC]
         
         window?.rootViewController = tabBarController
-        window?.makeKeyAndVisible()
     }
 
     func sceneDidDisconnect(_ scene: UIScene) {

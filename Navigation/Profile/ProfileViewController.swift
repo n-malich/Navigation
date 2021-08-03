@@ -8,48 +8,60 @@
 import UIKit
 
 class ProfileViewController: UIViewController {
-    let profileHeaderView = ProfileHeaderView()
-    let newButton = UIButton()
+
+    let profileHeaderView: ProfileHeaderView = {
+        let profile = ProfileHeaderView()
+        profile.translatesAutoresizingMaskIntoConstraints = false
+        return profile
+    }()
+    
+    let someButton: UIButton = {
+        let button = UIButton()
+        button.setTitle("Some button", for: .normal)
+        button.setTitleColor(.white, for: .normal)
+        button.backgroundColor = .systemBlue
+        button.layer.cornerRadius = 4
+        button.translatesAutoresizingMaskIntoConstraints = false
+        return button
+    }()
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        self.view.backgroundColor = .lightGray
-        self.navigationItem.title = "Profile"
-        
-        var tabBarItem = UITabBarItem()
-        tabBarItem = UITabBarItem(title: "Profile", image: UIImage.init(named: "profile"), tag: 1)
-        self.tabBarItem = tabBarItem
-        
-        self.view.addSubview(profileHeaderView)
-        profileHeaderView.translatesAutoresizingMaskIntoConstraints = false
-        [
-            profileHeaderView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            profileHeaderView.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 1),
-            profileHeaderView.trailingAnchor.constraint(equalTo: view.leadingAnchor),
-            profileHeaderView.heightAnchor.constraint(equalToConstant: 220),
-            profileHeaderView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor)
-        ]
-        .forEach {
-            $0.isActive = true
-        }
-        self.view.addSubview(newButton)
-        newButton.setTitle("New button", for: .normal)
-        newButton.setTitleColor(.white, for: .normal)
-        newButton.backgroundColor = .systemBlue
-        newButton.layer.cornerRadius = 4
-        newButton.translatesAutoresizingMaskIntoConstraints = false
-        [
-            newButton.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
-            newButton.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
-            newButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
-            newButton.heightAnchor.constraint(equalToConstant: 50)
-        ]
-        .forEach {
-            $0.isActive = true
-        }
+
+        setupViews()
+        setupConstraints()
     }
-    //Скрытие keyboard при нажатии за пределами TextField в ProfileViewController
+}
+
+extension ProfileViewController {
+    private func setupViews(){
+        
+        view.backgroundColor = .lightGray
+        view.addSubview(profileHeaderView)
+        view.addSubview(someButton)
+    }
+}
+
+extension ProfileViewController {
+    private func setupConstraints(){
+        [
+            profileHeaderView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
+            profileHeaderView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            profileHeaderView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            profileHeaderView.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 1),
+            profileHeaderView.heightAnchor.constraint(equalToConstant: 220),
+            
+            someButton.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
+            someButton.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
+            someButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
+            someButton.heightAnchor.constraint(equalToConstant: 50)
+        ]
+        .forEach {$0.isActive = true}
+    }
+}
+    
+extension ProfileViewController {
+    //Скрытие keyboard при нажатии за пределами TextField
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         if touches.first != nil {
             profileHeaderView.endEditing(true)

@@ -26,9 +26,6 @@ class PostViewController: UIViewController {
     infoVC.modalPresentationStyle = .formSheet
     infoVC.modalTransitionStyle = .coverVertical
     self.present(infoVC, animated: true, completion: nil)
-    
-    /*Если оставить navigationController
-    navigationController?.pushViewController(infoVC, animated: true)*/
     }
 }
 
