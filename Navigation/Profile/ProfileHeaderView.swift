@@ -107,28 +107,29 @@ extension ProfileHeaderView {
 extension ProfileHeaderView {
     private func setupConstraints(){
         [
-            avatarImageView.topAnchor.constraint(equalTo: self.safeAreaLayoutGuide.topAnchor, constant: 16),
-            avatarImageView.leadingAnchor.constraint(equalTo: self.safeAreaLayoutGuide.leadingAnchor, constant: 16),
+            avatarImageView.topAnchor.constraint(equalTo: self.topAnchor, constant: 16),
+            avatarImageView.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 16),
             avatarImageView.heightAnchor.constraint(equalToConstant: 110),
             avatarImageView.widthAnchor.constraint(equalToConstant: 110),
             
             fullNameLabel.topAnchor.constraint(equalTo: self.topAnchor, constant: 16),
             fullNameLabel.leadingAnchor.constraint(equalTo: avatarImageView.trailingAnchor, constant: 16),
-            fullNameLabel.trailingAnchor.constraint(equalTo: self.safeAreaLayoutGuide.trailingAnchor, constant: 16),
+            fullNameLabel.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: 16),
             fullNameLabel.heightAnchor.constraint(equalToConstant: 18),
             
-            setStatusButton.leadingAnchor.constraint(equalTo: self.safeAreaLayoutGuide.leadingAnchor, constant: 16),
-            setStatusButton.trailingAnchor.constraint(equalTo: self.safeAreaLayoutGuide.trailingAnchor, constant: -16),
+            setStatusButton.topAnchor.constraint(equalTo: avatarImageView.bottomAnchor, constant: 32),
+            setStatusButton.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 16),
+            setStatusButton.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -16),
             setStatusButton.bottomAnchor.constraint(equalTo: self.bottomAnchor),
             setStatusButton.heightAnchor.constraint(equalToConstant: 50),
             
             statusTextField.leadingAnchor.constraint(equalTo: avatarImageView.trailingAnchor, constant: 16),
-            statusTextField.trailingAnchor.constraint(equalTo: self.safeAreaLayoutGuide.trailingAnchor, constant: -16),
+            statusTextField.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -16),
             statusTextField.bottomAnchor.constraint(equalTo: setStatusButton.topAnchor, constant: -16),
             statusTextField.heightAnchor.constraint(equalToConstant: 40),
             
             statusLabel.leadingAnchor.constraint(equalTo: avatarImageView.trailingAnchor, constant: 16),
-            statusLabel.trailingAnchor.constraint(equalTo: self.safeAreaLayoutGuide.trailingAnchor, constant: 16),
+            statusLabel.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: 16),
             statusLabel.bottomAnchor.constraint(equalTo: statusTextField.topAnchor, constant: -16),
             statusLabel.heightAnchor.constraint(equalToConstant: 14)
         ]
