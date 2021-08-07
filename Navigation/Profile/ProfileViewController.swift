@@ -15,9 +15,9 @@ class ProfileViewController: UIViewController {
         return tableView
     }()
     
-    let cellID = "cellID"
+    let headerView = ProfileHeaderView()
     
-    let headerID = String(describing: ProfileTableHeaderView.self)
+    let cellID = String(describing: PostTableViewCell.self)
     
     private var arrayOFPosts = PostsVK().postsArray
 
@@ -26,6 +26,13 @@ class ProfileViewController: UIViewController {
 
         setupViews()
         setupConstraints()
+        
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
+        tableView.addGestureRecognizer(tapGesture)
+    }
+    
+    @objc func dismissKeyboard(){
+        self.view.endEditing(true)
     }
 }
 
@@ -35,10 +42,20 @@ extension ProfileViewController {
         view.addSubview(tableView)
         
         tableView.register(PostTableViewCell.self, forCellReuseIdentifier: cellID)
-        tableView.register(ProfileTableHeaderView.self, forHeaderFooterViewReuseIdentifier: headerID)
+        tableView.tableHeaderView = headerView
         
-        tableView.delegate = self
         tableView.dataSource = self
+        tableView.delegate = self
+        
+        headerView.setNeedsLayout()
+        headerView.layoutIfNeeded()
+        let height = headerView.systemLayoutSizeFitting(UIView.layoutFittingCompressedSize).height
+        let width = headerView.systemLayoutSizeFitting(UIView.layoutFittingCompressedSize).width
+        var headerFrame = headerView.frame
+        headerFrame.size.height = height
+        headerFrame.size.width = width
+        headerView.frame = headerFrame
+        
         tableView.reloadData()
     }
 }
@@ -49,7 +66,12 @@ extension ProfileViewController {
             tableView.topAnchor.constraint(equalTo: view.topAnchor),
             tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
+            tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+            
+            headerView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            headerView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            headerView.heightAnchor.constraint(equalTo: view.heightAnchor),
+            headerView.widthAnchor.constraint(equalTo: view.widthAnchor)
         ]
         .forEach {$0.isActive = true}
     }
@@ -57,8 +79,8 @@ extension ProfileViewController {
 
 extension ProfileViewController: UITableViewDataSource {
     func numberOfSections(in tableView: UITableView) -> Int {
-            return 1
-        }
+        return 1
+    }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return arrayOFPosts.count
@@ -67,21 +89,14 @@ extension ProfileViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell: PostTableViewCell = tableView.dequeueReusableCell(withIdentifier: cellID, for: indexPath) as! PostTableViewCell
         cell.post = arrayOFPosts[indexPath.row]
-        cell.selectionStyle = .none
         return cell
     }
 }
 
 extension ProfileViewController: UITableViewDelegate {
-    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        if section == 0 {
-            let headerView = ProfileTableHeaderView()
-            return headerView
-        }
-        return nil
-    }
-
-    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return 220
+    //Скрытие keyboard при нажатии за пределами TextField
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
+        dismissKeyboard()
     }
 }

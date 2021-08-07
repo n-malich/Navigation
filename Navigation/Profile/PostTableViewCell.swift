@@ -29,11 +29,11 @@ class PostTableViewCell: UITableViewCell {
                 
                 switch post.views {
                 case 0..<1000:
-                    viewsPost.text = "Likes: \(post.views)"
+                    viewsPost.text = "Views: \(post.views)"
                 case 1_000..<1000_000:
-                    viewsPost.text = "Likes: \(post.views / 1_000)K"
+                    viewsPost.text = "Views: \(post.views / 1_000)K"
                 case 1_000_000... :
-                    viewsPost.text = "Likes: \(post.views / 1_000_000)Kk"
+                    viewsPost.text = "Views: \(post.views / 1_000_000)Kk"
                 default:
                     break
                 }
@@ -84,54 +84,50 @@ class PostTableViewCell: UITableViewCell {
         return label
     }()
     
-    override func awakeFromNib() {
-        super.awakeFromNib()
-        // Initialization code
-    }
-
+    private var baseInset: CGFloat { return 16 }
+    
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
-        
+
         setupViews()
         setupConstraints()
-        // Configure the view for the selected state
     }
 }
 
 extension PostTableViewCell {
     private func setupViews() {
-        contentView.addSubview(authorPost)
-        contentView.addSubview(descriptionPost)
-        contentView.addSubview(imagePost)
-        contentView.addSubview(likesPost)
-        contentView.addSubview(viewsPost)
+        addSubview(authorPost)
+        addSubview(descriptionPost)
+        addSubview(imagePost)
+        addSubview(likesPost)
+        addSubview(viewsPost)
     }
 }
 
 extension PostTableViewCell {
     private func setupConstraints() {
         [
-            authorPost.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 16),
-            authorPost.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16),
-            authorPost.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16),
+            authorPost.topAnchor.constraint(equalTo: self.topAnchor, constant: baseInset),
+            authorPost.leadingAnchor.constraint(equalTo: self.safeAreaLayoutGuide.leadingAnchor, constant: baseInset),
+            authorPost.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -baseInset),
             
-            imagePost.topAnchor.constraint(equalTo: authorPost.bottomAnchor, constant: 16),
-            imagePost.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
-            imagePost.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
-            imagePost.heightAnchor.constraint(equalTo: contentView.widthAnchor),
-            imagePost.widthAnchor.constraint(equalTo: contentView.widthAnchor),
+            imagePost.topAnchor.constraint(equalTo: authorPost.bottomAnchor, constant: baseInset),
+            imagePost.leadingAnchor.constraint(equalTo: self.safeAreaLayoutGuide.leadingAnchor),
+            imagePost.trailingAnchor.constraint(equalTo: self.safeAreaLayoutGuide.trailingAnchor),
+            imagePost.widthAnchor.constraint(equalTo: self.safeAreaLayoutGuide.widthAnchor),
+            imagePost.heightAnchor.constraint(equalTo: imagePost.widthAnchor),
             
-            descriptionPost.topAnchor.constraint(equalTo: imagePost.bottomAnchor, constant: 16),
-            descriptionPost.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16),
-            descriptionPost.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16),
+            descriptionPost.topAnchor.constraint(equalTo: imagePost.bottomAnchor, constant: baseInset),
+            descriptionPost.leadingAnchor.constraint(equalTo: self.safeAreaLayoutGuide.leadingAnchor, constant: baseInset),
+            descriptionPost.trailingAnchor.constraint(equalTo: self.safeAreaLayoutGuide.trailingAnchor, constant: -baseInset),
             
-            likesPost.topAnchor.constraint(equalTo: descriptionPost.bottomAnchor, constant: 16),
-            likesPost.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16),
-            likesPost.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -16),
+            likesPost.topAnchor.constraint(equalTo: descriptionPost.bottomAnchor, constant: baseInset),
+            likesPost.leadingAnchor.constraint(equalTo: self.safeAreaLayoutGuide.leadingAnchor, constant: baseInset),
+            likesPost.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -baseInset),
                     
-            viewsPost.topAnchor.constraint(equalTo: descriptionPost.bottomAnchor, constant: 16),
-            viewsPost.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16),
-            viewsPost.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -16)
+            viewsPost.topAnchor.constraint(equalTo: descriptionPost.bottomAnchor, constant: baseInset),
+            viewsPost.trailingAnchor.constraint(equalTo: self.safeAreaLayoutGuide.trailingAnchor, constant: -baseInset),
+            viewsPost.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -baseInset)
         ]
         .forEach {$0.isActive = true}
     }
