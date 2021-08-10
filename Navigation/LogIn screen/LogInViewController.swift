@@ -96,7 +96,7 @@ class LogInViewController: UIViewController {
         setupViews()
         setupConstraints()
         
-        self.setupHideKeyboardOnTap()
+        setupHideKeyboardOnTap()
     }
     
     override func viewWillAppear(_ animated: Bool) {

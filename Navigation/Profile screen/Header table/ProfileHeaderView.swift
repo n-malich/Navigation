@@ -160,9 +160,6 @@ extension ProfileHeaderView {
              statusLabel.text = "Set up status"
          }
      }
- }
-
-extension ProfileHeaderView {
     //Скрытие keyboard при нажатии клавиши Return
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         statusTextField.resignFirstResponder()

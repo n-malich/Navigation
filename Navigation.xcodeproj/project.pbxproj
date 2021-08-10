@@ -8,6 +8,10 @@
 
 /* Begin PBXBuildFile section */
 		CB234A6226B6D5C0002F3611 /* LogInViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB234A6126B6D5C0002F3611 /* LogInViewController.swift */; };
+		CB37437C26C129B70057F56D /* PhotosTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB37437B26C129B70057F56D /* PhotosTableViewCell.swift */; };
+		CB37437E26C1479F0057F56D /* PhotosVK.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB37437D26C1479F0057F56D /* PhotosVK.swift */; };
+		CB37438626C17D100057F56D /* PhotosViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB37438526C17D100057F56D /* PhotosViewController.swift */; };
+		CB37438826C1829A0057F56D /* PhotosCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB37438726C182990057F56D /* PhotosCollectionViewCell.swift */; };
 		CB4BC90526BC48A5005CD55A /* PostVK.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB4BC90426BC48A5005CD55A /* PostVK.swift */; };
 		CB4BC90926BC4E0F005CD55A /* PostsVK.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB4BC90826BC4E0F005CD55A /* PostsVK.swift */; };
 		CB4BC90B26BC6EB3005CD55A /* PostTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB4BC90A26BC6EB3005CD55A /* PostTableViewCell.swift */; };
@@ -26,6 +30,10 @@
 
 /* Begin PBXFileReference section */
 		CB234A6126B6D5C0002F3611 /* LogInViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogInViewController.swift; sourceTree = "<group>"; };
+		CB37437B26C129B70057F56D /* PhotosTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotosTableViewCell.swift; sourceTree = "<group>"; };
+		CB37437D26C1479F0057F56D /* PhotosVK.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotosVK.swift; sourceTree = "<group>"; };
+		CB37438526C17D100057F56D /* PhotosViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotosViewController.swift; sourceTree = "<group>"; };
+		CB37438726C182990057F56D /* PhotosCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotosCollectionViewCell.swift; sourceTree = "<group>"; };
 		CB4BC90426BC48A5005CD55A /* PostVK.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostVK.swift; sourceTree = "<group>"; };
 		CB4BC90826BC4E0F005CD55A /* PostsVK.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostsVK.swift; sourceTree = "<group>"; };
 		CB4BC90A26BC6EB3005CD55A /* PostTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostTableViewCell.swift; sourceTree = "<group>"; };
@@ -55,6 +63,43 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		CB37437F26C14D880057F56D /* LogIn screen */ = {
+			isa = PBXGroup;
+			children = (
+				CB234A6126B6D5C0002F3611 /* LogInViewController.swift */,
+			);
+			path = "LogIn screen";
+			sourceTree = "<group>";
+		};
+		CB37438026C14DF30057F56D /* Post cell */ = {
+			isa = PBXGroup;
+			children = (
+				CB4BC90A26BC6EB3005CD55A /* PostTableViewCell.swift */,
+				CB4BC90826BC4E0F005CD55A /* PostsVK.swift */,
+				CB4BC90426BC48A5005CD55A /* PostVK.swift */,
+			);
+			path = "Post cell";
+			sourceTree = "<group>";
+		};
+		CB37438126C14E3B0057F56D /* Header table */ = {
+			isa = PBXGroup;
+			children = (
+				CB5E544B26A8032A00B603C0 /* ProfileHeaderView.swift */,
+			);
+			path = "Header table";
+			sourceTree = "<group>";
+		};
+		CB37438226C14F220057F56D /* Photos cell */ = {
+			isa = PBXGroup;
+			children = (
+				CB37437B26C129B70057F56D /* PhotosTableViewCell.swift */,
+				CB37438526C17D100057F56D /* PhotosViewController.swift */,
+				CB37438726C182990057F56D /* PhotosCollectionViewCell.swift */,
+				CB37437D26C1479F0057F56D /* PhotosVK.swift */,
+			);
+			path = "Photos cell";
+			sourceTree = "<group>";
+		};
 		CB51C39B26A0724A00FE942C = {
 			isa = PBXGroup;
 			children = (
@@ -74,8 +119,9 @@
 		CB51C3A626A0724A00FE942C /* Navigation */ = {
 			isa = PBXGroup;
 			children = (
-				CB64952826A5FD2B00EB92DD /* Profile */,
-				CB9D3C2126AA15A900BBBCF2 /* Feed */,
+				CB37437F26C14D880057F56D /* LogIn screen */,
+				CB64952826A5FD2B00EB92DD /* Profile screen */,
+				CB9D3C2126AA15A900BBBCF2 /* Feed screen */,
 				CB51C3A726A0724A00FE942C /* AppDelegate.swift */,
 				CB51C3A926A0724A00FE942C /* SceneDelegate.swift */,
 				CB51C3AB26A0724A00FE942C /* ViewController.swift */,
@@ -86,28 +132,26 @@
 			path = Navigation;
 			sourceTree = "<group>";
 		};
-		CB64952826A5FD2B00EB92DD /* Profile */ = {
+		CB64952826A5FD2B00EB92DD /* Profile screen */ = {
 			isa = PBXGroup;
 			children = (
-				CB234A6126B6D5C0002F3611 /* LogInViewController.swift */,
 				CB51C3BD26A0759800FE942C /* ProfileViewController.swift */,
-				CB4BC90A26BC6EB3005CD55A /* PostTableViewCell.swift */,
-				CB5E544B26A8032A00B603C0 /* ProfileHeaderView.swift */,
-				CB4BC90426BC48A5005CD55A /* PostVK.swift */,
-				CB4BC90826BC4E0F005CD55A /* PostsVK.swift */,
+				CB37438126C14E3B0057F56D /* Header table */,
+				CB37438026C14DF30057F56D /* Post cell */,
+				CB37438226C14F220057F56D /* Photos cell */,
 			);
-			path = Profile;
+			path = "Profile screen";
 			sourceTree = "<group>";
 		};
-		CB9D3C2126AA15A900BBBCF2 /* Feed */ = {
+		CB9D3C2126AA15A900BBBCF2 /* Feed screen */ = {
 			isa = PBXGroup;
 			children = (
+				CB51C3BB26A074C200FE942C /* FeedViewController.swift */,
 				CB51C3BF26A0864F00FE942C /* PostViewController.swift */,
 				CB51C3C326A15DBB00FE942C /* Post.swift */,
 				CB51C3C126A0C78000FE942C /* InfoViewController.swift */,
-				CB51C3BB26A074C200FE942C /* FeedViewController.swift */,
 			);
-			path = Feed;
+			path = "Feed screen";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -180,16 +224,20 @@
 			buildActionMask = 2147483647;
 			files = (
 				CB51C3C026A0864F00FE942C /* PostViewController.swift in Sources */,
+				CB37438626C17D100057F56D /* PhotosViewController.swift in Sources */,
 				CB51C3AC26A0724A00FE942C /* ViewController.swift in Sources */,
 				CB51C3A826A0724A00FE942C /* AppDelegate.swift in Sources */,
 				CB51C3C426A15DBB00FE942C /* Post.swift in Sources */,
+				CB37437E26C1479F0057F56D /* PhotosVK.swift in Sources */,
 				CB5E544C26A8032A00B603C0 /* ProfileHeaderView.swift in Sources */,
 				CB51C3C226A0C78000FE942C /* InfoViewController.swift in Sources */,
 				CB51C3BE26A0759800FE942C /* ProfileViewController.swift in Sources */,
 				CB4BC90B26BC6EB3005CD55A /* PostTableViewCell.swift in Sources */,
+				CB37437C26C129B70057F56D /* PhotosTableViewCell.swift in Sources */,
 				CB51C3BC26A074C200FE942C /* FeedViewController.swift in Sources */,
 				CB4BC90526BC48A5005CD55A /* PostVK.swift in Sources */,
 				CB234A6226B6D5C0002F3611 /* LogInViewController.swift in Sources */,
+				CB37438826C1829A0057F56D /* PhotosCollectionViewCell.swift in Sources */,
 				CB4BC90926BC4E0F005CD55A /* PostsVK.swift in Sources */,
 				CB51C3AA26A0724A00FE942C /* SceneDelegate.swift in Sources */,
 			);

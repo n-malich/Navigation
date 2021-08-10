@@ -17,61 +17,49 @@ class ProfileViewController: UIViewController {
     
     let headerView = ProfileHeaderView()
     
-    let cellID = String(describing: PostTableViewCell.self)
+    let postID = String(describing: PostTableViewCell.self)
+    let photosID = String(describing: PhotosTableViewCell.self)
     
     private var arrayOFPosts = PostsVK().postsArray
 
-    override func viewDidLoad() {
-        super.viewDidLoad()
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
 
         setupViews()
         setupConstraints()
-        
-        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
-        tableView.addGestureRecognizer(tapGesture)
-    }
-    
-    @objc func dismissKeyboard(){
-        self.view.endEditing(true)
     }
 }
 
 extension ProfileViewController {
-    private func setupViews(){
+    private func setupViews() {
         
         view.addSubview(tableView)
         
-        tableView.register(PostTableViewCell.self, forCellReuseIdentifier: cellID)
         tableView.tableHeaderView = headerView
+        tableView.register(PostTableViewCell.self, forCellReuseIdentifier: postID)
+        tableView.register(PhotosTableViewCell.self, forCellReuseIdentifier: photosID)
         
         tableView.dataSource = self
         tableView.delegate = self
         
+        let height = headerView.systemLayoutSizeFitting(UIView.layoutFittingCompressedSize).height
+        var frame = headerView.frame
+        frame.size.height = height
+        headerView.frame = frame
+        tableView.tableHeaderView = headerView
         headerView.setNeedsLayout()
         headerView.layoutIfNeeded()
-        let height = headerView.systemLayoutSizeFitting(UIView.layoutFittingCompressedSize).height
-        let width = headerView.systemLayoutSizeFitting(UIView.layoutFittingCompressedSize).width
-        var headerFrame = headerView.frame
-        headerFrame.size.height = height
-        headerFrame.size.width = width
-        headerView.frame = headerFrame
-        
         tableView.reloadData()
     }
 }
 
 extension ProfileViewController {
-    private func setupConstraints(){
+    private func setupConstraints() {
         [
             tableView.topAnchor.constraint(equalTo: view.topAnchor),
             tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
-            
-            headerView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            headerView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            headerView.heightAnchor.constraint(equalTo: view.heightAnchor),
-            headerView.widthAnchor.constraint(equalTo: view.widthAnchor)
         ]
         .forEach {$0.isActive = true}
     }
@@ -83,20 +71,29 @@ extension ProfileViewController: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return arrayOFPosts.count
+        return arrayOFPosts.count + 1
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell: PostTableViewCell = tableView.dequeueReusableCell(withIdentifier: cellID, for: indexPath) as! PostTableViewCell
-        cell.post = arrayOFPosts[indexPath.row]
-        return cell
+    
+        if indexPath.row == 0 {
+            let cell: PhotosTableViewCell = tableView.dequeueReusableCell(withIdentifier: photosID, for: indexPath) as! PhotosTableViewCell
+            return cell
+        } else {
+            let cell: PostTableViewCell = tableView.dequeueReusableCell(withIdentifier: postID, for: indexPath) as! PostTableViewCell
+            cell.post = arrayOFPosts[indexPath.row - 1]
+            return cell
+        }
     }
 }
 
 extension ProfileViewController: UITableViewDelegate {
-    //Скрытие keyboard при нажатии за пределами TextField
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        tableView.deselectRow(at: indexPath, animated: true)
-        dismissKeyboard()
+        if indexPath.row == 0 {
+            let photosVC = PhotosViewController()
+            navigationController?.pushViewController(photosVC, animated: true)
+        } else {
+            tableView.deselectRow(at: indexPath, animated: true)
+        }
     }
 }
