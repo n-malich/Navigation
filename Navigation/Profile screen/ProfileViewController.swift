@@ -21,9 +21,9 @@ class ProfileViewController: UIViewController {
     let photosID = String(describing: PhotosTableViewCell.self)
     
     private var arrayOFPosts = PostsVK().postsArray
-
-    override func viewDidLayoutSubviews() {
-        super.viewDidLayoutSubviews()
+        
+    override func viewDidLoad() {
+        super .viewDidLoad()
 
         setupViews()
         setupConstraints()
@@ -33,22 +33,15 @@ class ProfileViewController: UIViewController {
 extension ProfileViewController {
     private func setupViews() {
         
+        view.backgroundColor = .white
         view.addSubview(tableView)
         
-        tableView.tableHeaderView = headerView
         tableView.register(PostTableViewCell.self, forCellReuseIdentifier: postID)
         tableView.register(PhotosTableViewCell.self, forCellReuseIdentifier: photosID)
         
         tableView.dataSource = self
         tableView.delegate = self
-        
-        let height = headerView.systemLayoutSizeFitting(UIView.layoutFittingCompressedSize).height
-        var frame = headerView.frame
-        frame.size.height = height
-        headerView.frame = frame
-        tableView.tableHeaderView = headerView
-        headerView.setNeedsLayout()
-        headerView.layoutIfNeeded()
+
         tableView.reloadData()
     }
 }
@@ -57,8 +50,8 @@ extension ProfileViewController {
     private func setupConstraints() {
         [
             tableView.topAnchor.constraint(equalTo: view.topAnchor),
-            tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            tableView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
+            tableView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
             tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
         ]
         .forEach {$0.isActive = true}
@@ -81,7 +74,7 @@ extension ProfileViewController: UITableViewDataSource {
             return cell
         } else {
             let cell: PostTableViewCell = tableView.dequeueReusableCell(withIdentifier: postID, for: indexPath) as! PostTableViewCell
-            cell.post = arrayOFPosts[indexPath.row - 1]
+        cell.post = arrayOFPosts[indexPath.row - 1]
             return cell
         }
     }
@@ -92,8 +85,14 @@ extension ProfileViewController: UITableViewDelegate {
         if indexPath.row == 0 {
             let photosVC = PhotosViewController()
             navigationController?.pushViewController(photosVC, animated: true)
+            tableView.deselectRow(at: indexPath, animated: true)
         } else {
             tableView.deselectRow(at: indexPath, animated: true)
         }
+    }
+    
+    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+            guard section == 0 else { return nil }
+            return headerView
     }
 }

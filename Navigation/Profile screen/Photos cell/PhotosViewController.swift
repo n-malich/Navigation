@@ -44,6 +44,8 @@ class PhotosViewController: UIViewController {
 
 extension PhotosViewController {
     private func setupViews() {
+        
+        view.backgroundColor = .white
         view.addSubview(collectionView)
         
         collectionView.register(PhotosCollectionViewCell.self, forCellWithReuseIdentifier: photosCollectionID)
@@ -54,8 +56,8 @@ extension PhotosViewController {
     private func setupConstraints() {
         [
             collectionView.topAnchor.constraint(equalTo: view.topAnchor),
-            collectionView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            collectionView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            collectionView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
+            collectionView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
             collectionView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
         ]
         .forEach {$0.isActive = true}

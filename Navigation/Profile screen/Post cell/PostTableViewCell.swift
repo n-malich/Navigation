@@ -87,9 +87,14 @@ class PostTableViewCell: UITableViewCell {
     
     private var baseInset: CGFloat { return 16 }
     
-    override func setSelected(_ selected: Bool, animated: Bool) {
-        super.setSelected(selected, animated: animated)
-
+    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
+        super.init(style: style, reuseIdentifier: reuseIdentifier)
+        setupViews()
+        setupConstraints()
+    }
+    
+    required init?(coder: NSCoder) {
+        super.init(coder: coder)
         setupViews()
         setupConstraints()
     }
@@ -109,25 +114,25 @@ extension PostTableViewCell {
     private func setupConstraints() {
         [
             authorPost.topAnchor.constraint(equalTo: contentView.topAnchor, constant: baseInset),
-            authorPost.leadingAnchor.constraint(equalTo: contentView.safeAreaLayoutGuide.leadingAnchor, constant: baseInset),
+            authorPost.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: baseInset),
             authorPost.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -baseInset),
             
             imagePost.topAnchor.constraint(equalTo: authorPost.bottomAnchor, constant: baseInset),
-            imagePost.leadingAnchor.constraint(equalTo: contentView.safeAreaLayoutGuide.leadingAnchor),
-            imagePost.trailingAnchor.constraint(equalTo: contentView.safeAreaLayoutGuide.trailingAnchor),
-            imagePost.widthAnchor.constraint(equalTo: contentView.safeAreaLayoutGuide.widthAnchor),
+            imagePost.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
+            imagePost.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
+            imagePost.widthAnchor.constraint(equalTo: contentView.widthAnchor),
             imagePost.heightAnchor.constraint(equalTo: imagePost.widthAnchor),
             
             descriptionPost.topAnchor.constraint(equalTo: imagePost.bottomAnchor, constant: baseInset),
-            descriptionPost.leadingAnchor.constraint(equalTo: contentView.safeAreaLayoutGuide.leadingAnchor, constant: baseInset),
-            descriptionPost.trailingAnchor.constraint(equalTo: contentView.safeAreaLayoutGuide.trailingAnchor, constant: -baseInset),
+            descriptionPost.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: baseInset),
+            descriptionPost.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -baseInset),
             
             likesPost.topAnchor.constraint(equalTo: descriptionPost.bottomAnchor, constant: baseInset),
-            likesPost.leadingAnchor.constraint(equalTo: contentView.safeAreaLayoutGuide.leadingAnchor, constant: baseInset),
+            likesPost.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: baseInset),
             likesPost.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -baseInset),
                     
             viewsPost.topAnchor.constraint(equalTo: descriptionPost.bottomAnchor, constant: baseInset),
-            viewsPost.trailingAnchor.constraint(equalTo: contentView.safeAreaLayoutGuide.trailingAnchor, constant: -baseInset),
+            viewsPost.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -baseInset),
             viewsPost.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -baseInset)
         ]
         .forEach {$0.isActive = true}
