@@ -22,7 +22,7 @@ class PhotosTableViewCell: UITableViewCell {
     }()
 
     let arrowRightPhotos: UIImageView = {
-       let image = UIImageView(image: UIImage(systemName: "arrow.forward"))
+       let image = UIImageView(image: UIImage(systemName: "arrow.right"))
         image.tintColor = .black
         image.translatesAutoresizingMaskIntoConstraints = false
         return image
@@ -55,10 +55,8 @@ class PhotosTableViewCell: UITableViewCell {
 
 extension PhotosTableViewCell {
     private func setupViews() {
-
-        contentView.addSubview(titlePhotos)
-        contentView.addSubview(arrowRightPhotos)
-        contentView.addSubview(collectionView)
+        
+        [titlePhotos, arrowRightPhotos, collectionView].forEach {contentView.addSubview($0)}
         
         collectionView.register(PhotosCollectionViewCell.self, forCellWithReuseIdentifier: photosCollectionID)
         collectionView.dataSource = self
@@ -72,13 +70,14 @@ extension PhotosTableViewCell {
         [
             titlePhotos.topAnchor.constraint(equalTo: contentView.topAnchor, constant: baseInset),
             titlePhotos.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: baseInset),
+            titlePhotos.trailingAnchor.constraint(equalTo: arrowRightPhotos.leadingAnchor, constant: -baseInset),
 
             arrowRightPhotos.centerYAnchor.constraint(equalTo: titlePhotos.centerYAnchor),
             arrowRightPhotos.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -baseInset),
             arrowRightPhotos.heightAnchor.constraint(equalToConstant: 25),
             arrowRightPhotos.widthAnchor.constraint(equalTo: arrowRightPhotos.heightAnchor),
             
-            collectionView.topAnchor.constraint(equalTo: titlePhotos.bottomAnchor),
+            collectionView.topAnchor.constraint(equalTo: titlePhotos.bottomAnchor, constant: baseInset),
             collectionView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
             collectionView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
             collectionView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor),
@@ -104,8 +103,8 @@ extension PhotosTableViewCell: UICollectionViewDataSource {
 extension PhotosTableViewCell: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt IndexPath: IndexPath) -> CGSize {
         let width: CGFloat
-        width = (collectionView.frame.width - baseInset * 2 - 8 * 3)/4
         let height: CGFloat
+        width = (collectionView.frame.width - baseInset * 2 - 8 * 3)/4
         height = collectionView.frame.height - baseInset * 2
         return CGSize(width: width, height: height)
     }
@@ -113,8 +112,8 @@ extension PhotosTableViewCell: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
         return 8
     }
-
+    
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
-        return UIEdgeInsets(top: baseInset, left: baseInset, bottom: baseInset, right: baseInset)
+        return UIEdgeInsets(top: 0, left: baseInset, bottom: baseInset, right: baseInset)
     }
 }

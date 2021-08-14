@@ -72,6 +72,7 @@ class PostTableViewCell: UITableViewCell {
         let label = UILabel()
         label.font = UIFont.systemFont(ofSize: 16, weight: .regular)
         label.textColor = .black
+        label.textAlignment = .left
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
@@ -81,6 +82,7 @@ class PostTableViewCell: UITableViewCell {
         let label = UILabel()
         label.font = UIFont.systemFont(ofSize: 16, weight: .regular)
         label.textColor = .black
+        label.textAlignment = .right
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
@@ -102,11 +104,8 @@ class PostTableViewCell: UITableViewCell {
 
 extension PostTableViewCell {
     private func setupViews() {
-        contentView.addSubview(authorPost)
-        contentView.addSubview(descriptionPost)
-        contentView.addSubview(imagePost)
-        contentView.addSubview(likesPost)
-        contentView.addSubview(viewsPost)
+        
+        [authorPost, descriptionPost, imagePost, likesPost, viewsPost].forEach {contentView.addSubview ($0)}
     }
 }
 
@@ -133,7 +132,7 @@ extension PostTableViewCell {
                     
             viewsPost.topAnchor.constraint(equalTo: descriptionPost.bottomAnchor, constant: baseInset),
             viewsPost.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -baseInset),
-            viewsPost.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -baseInset)
+            viewsPost.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -baseInset),
         ]
         .forEach {$0.isActive = true}
     }

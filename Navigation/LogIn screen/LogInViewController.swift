@@ -136,19 +136,16 @@ extension LogInViewController {
             view.addSubview(scrollView)
             scrollView.addSubview(contentView)
             
-            contentView.addSubview(logoImageView)
-            contentView.addSubview(emailTextField)
-            contentView.addSubview(passwordTextField)
-            contentView.addSubview(logInButton)
+            [logoImageView, emailTextField, passwordTextField, logInButton].forEach { contentView.addSubview($0)}
         }
     }
 
 extension LogInViewController {
     private func setupConstraints() {
         [
-            scrollView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
-            scrollView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
-            scrollView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
+            scrollView.topAnchor.constraint(equalTo: view.topAnchor),
+            scrollView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            scrollView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             scrollView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
             
             contentView.topAnchor.constraint(equalTo: scrollView.topAnchor),

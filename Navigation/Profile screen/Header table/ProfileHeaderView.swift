@@ -78,6 +78,23 @@ class ProfileHeaderView: UIView {
     private var baseInset: CGFloat { return 16 }
     
     private var statusText = String()
+    
+    let animationView: UIView = {
+        let view = UIView()
+        view.backgroundColor = .black
+        view.alpha = 0
+        view.translatesAutoresizingMaskIntoConstraints = false
+        return view
+    }()
+    
+    let closeButton: UIButton = {
+        let button = UIButton()
+        button.setBackgroundImage(UIImage (systemName: "xmark.circle.fill"), for: .normal)
+        button.tintColor = .lightGray
+        button.alpha = 0
+        button.translatesAutoresizingMaskIntoConstraints = false
+        return button
+    }()
 
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -89,13 +106,13 @@ class ProfileHeaderView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
 
-
     func configure() {
-        
+    
         setupViews()
         setupConstraints()
 
         statusTextField.delegate = self
+
     }
     
     @objc func statusTextChanged() {
@@ -115,11 +132,8 @@ class ProfileHeaderView: UIView {
 
 extension ProfileHeaderView {
     private func setupViews(){
-        addSubview(avatarImageView)
-        addSubview(fullNameLabel)
-        addSubview(setStatusButton)
-        addSubview(statusTextField)
-        addSubview(statusLabel)
+        
+        [fullNameLabel, statusLabel, statusTextField, setStatusButton, animationView, closeButton, avatarImageView].forEach {self.addSubview ($0)}
     }
 }
 
@@ -128,22 +142,20 @@ extension ProfileHeaderView {
         [
             avatarImageView.topAnchor.constraint(equalTo: self.topAnchor, constant: baseInset),
             avatarImageView.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: baseInset),
-            avatarImageView.heightAnchor.constraint(equalToConstant: 110),
             avatarImageView.widthAnchor.constraint(equalToConstant: 110),
+            avatarImageView.heightAnchor.constraint(equalTo: avatarImageView.widthAnchor),
             
-            fullNameLabel.topAnchor.constraint(equalTo: avatarImageView.topAnchor),
+            fullNameLabel.topAnchor.constraint(equalTo: self.topAnchor, constant: baseInset),
             fullNameLabel.leadingAnchor.constraint(equalTo: avatarImageView.trailingAnchor, constant: baseInset),
             fullNameLabel.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -baseInset),
-            fullNameLabel.heightAnchor.constraint(equalToConstant: 18),
             
             statusLabel.topAnchor.constraint(equalTo: fullNameLabel.bottomAnchor, constant: 34),
-            statusLabel.leadingAnchor.constraint(equalTo: fullNameLabel.leadingAnchor),
-            statusLabel.trailingAnchor.constraint(equalTo: fullNameLabel.trailingAnchor),
-            statusLabel.heightAnchor.constraint(equalToConstant: 14),
+            statusLabel.leadingAnchor.constraint(equalTo: avatarImageView.trailingAnchor, constant: baseInset),
+            statusLabel.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -baseInset),
             
             statusTextField.topAnchor.constraint(equalTo: statusLabel.bottomAnchor, constant: baseInset),
-            statusTextField.leadingAnchor.constraint(equalTo: fullNameLabel.leadingAnchor),
-            statusTextField.trailingAnchor.constraint(equalTo: fullNameLabel.trailingAnchor),
+            statusTextField.leadingAnchor.constraint(equalTo: avatarImageView.trailingAnchor, constant: baseInset),
+            statusTextField.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -baseInset),
             statusTextField.heightAnchor.constraint(equalToConstant: 40),
             
             setStatusButton.topAnchor.constraint(equalTo: statusTextField.bottomAnchor, constant: 16),
