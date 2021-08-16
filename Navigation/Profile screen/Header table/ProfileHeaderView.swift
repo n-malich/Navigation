@@ -86,15 +86,6 @@ class ProfileHeaderView: UIView {
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
-    
-    let closeButton: UIButton = {
-        let button = UIButton()
-        button.setBackgroundImage(UIImage (systemName: "xmark.circle.fill"), for: .normal)
-        button.tintColor = .lightGray
-        button.alpha = 0
-        button.translatesAutoresizingMaskIntoConstraints = false
-        return button
-    }()
 
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -132,8 +123,8 @@ class ProfileHeaderView: UIView {
 
 extension ProfileHeaderView {
     private func setupViews(){
-        
-        [fullNameLabel, statusLabel, statusTextField, setStatusButton, animationView, closeButton, avatarImageView].forEach {self.addSubview ($0)}
+
+        [fullNameLabel, statusLabel, statusTextField, setStatusButton, animationView, avatarImageView].forEach {self.addSubview ($0)}
     }
 }
 
@@ -144,6 +135,11 @@ extension ProfileHeaderView {
             avatarImageView.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: baseInset),
             avatarImageView.widthAnchor.constraint(equalToConstant: 110),
             avatarImageView.heightAnchor.constraint(equalTo: avatarImageView.widthAnchor),
+            
+            animationView.topAnchor.constraint(equalTo: self.topAnchor, constant: baseInset),
+            animationView.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: baseInset),
+            animationView.widthAnchor.constraint(equalToConstant: 110),
+            animationView.heightAnchor.constraint(equalTo: avatarImageView.widthAnchor),
             
             fullNameLabel.topAnchor.constraint(equalTo: self.topAnchor, constant: baseInset),
             fullNameLabel.leadingAnchor.constraint(equalTo: avatarImageView.trailingAnchor, constant: baseInset),
