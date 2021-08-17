@@ -145,42 +145,45 @@ extension ProfileViewController {
     }
 }
 
+private let originalTransform = ProfileHeaderView().avatarImageView.transform
+
  extension ProfileViewController {
      //Анимация avatarImageView
      @objc func avatarOnTap() {
          UIView.animateKeyframes(withDuration: 0.5, delay: 0, options: [.calculationModeCubicPaced], animations: {
              UIView.addKeyframe(withRelativeStartTime: 0.0, relativeDuration: 0.3) {
-                 self.headerView.avatarImageView.transform = CGAffineTransform(scaleX: 0.999, y: 0.999)
-                 self.headerView.avatarImageView.frame = CGRect(x: 0, y: self.view.bounds.height/2 - self.view.bounds.width/2, width: self.view.bounds.width, height: self.view.bounds.width)
-                 self.headerView.avatarImageView.layer.cornerRadius = 0
+                self.headerView.avatarImageView.center = self.view.center
+                let scaleFactor = self.view.bounds.width / self.headerView.avatarImageView.bounds.width
+                self.headerView.avatarImageView.transform = self.headerView.avatarImageView.transform.scaledBy(x: scaleFactor, y: scaleFactor)
+                self.headerView.avatarImageView.layer.cornerRadius = 0
                 
                 self.headerView.animationView.transform = CGAffineTransform(scaleX: 1, y: 1)
                 self.headerView.animationView.frame = CGRect(x: 0, y: 0, width: self.view.frame.width, height: self.view.frame.height)
                 self.headerView.animationView.alpha = 0.75
              }
-             UIView.addKeyframe(withRelativeStartTime: 0.3, relativeDuration: 0.2) {
-                 self.closeButton.alpha = 1
-             }
+            UIView.addKeyframe(withRelativeStartTime: 0.3, relativeDuration: 0.2) {
+                self.closeButton.alpha = 1
+            }
          })
      }
  }
 
- extension ProfileViewController {
-     //Закрытие анимированного avatarImageView
-     @objc func tapOnСloseButton() {
-         UIView.animateKeyframes(withDuration: 0.5, delay: 0, options: [.calculationModeCubicPaced], animations: {
-             UIView.addKeyframe(withRelativeStartTime: 0.0, relativeDuration: 0.3) {
-                 self.closeButton.alpha = 0
-         }
-             UIView.addKeyframe(withRelativeStartTime: 0.3, relativeDuration: 0.2) {
+extension ProfileViewController {
+    //Закрытие анимированного avatarImageView
+    @objc func tapOnСloseButton() {
+        UIView.animateKeyframes(withDuration: 0.5, delay: 0, options: [.calculationModeCubicPaced], animations: {
+            UIView.addKeyframe(withRelativeStartTime: 0.0, relativeDuration: 0.3) {
+                self.closeButton.alpha = 0
+            }
+            UIView.addKeyframe(withRelativeStartTime: 0.3, relativeDuration: 0.2) {
+                self.headerView.avatarImageView.transform = originalTransform
                 self.headerView.avatarImageView.frame = CGRect(x: 16, y: 16, width: 110, height: 110)
-                self.headerView.avatarImageView.transform = CGAffineTransform(scaleX: 1, y: 1)
                 self.headerView.avatarImageView.layer.cornerRadius = 55
                 
                 self.headerView.animationView.frame = CGRect(x: 16, y: 16, width: 110, height: 110)
                 self.headerView.animationView.transform = CGAffineTransform(scaleX: 1, y: 1)
                 self.headerView.animationView.alpha = 0
-             }
-         })
-     }
- }
+            }
+        })
+    }
+}
