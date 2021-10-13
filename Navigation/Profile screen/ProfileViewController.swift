@@ -152,9 +152,14 @@ private let originalTransform = ProfileHeaderView().avatarImageView.transform
      @objc func avatarOnTap() {
          UIView.animateKeyframes(withDuration: 0.5, delay: 0, options: [.calculationModeCubicPaced], animations: {
              UIView.addKeyframe(withRelativeStartTime: 0.0, relativeDuration: 0.3) {
+                
+                self.tableView.isScrollEnabled = false
+                self.tableView.allowsSelection = false
+
                 self.headerView.avatarImageView.center = self.view.center
                 let scaleFactor = self.view.bounds.width / self.headerView.avatarImageView.bounds.width
                 self.headerView.avatarImageView.transform = self.headerView.avatarImageView.transform.scaledBy(x: scaleFactor, y: scaleFactor)
+                self.headerView.avatarImageView.layer.borderWidth = 0
                 self.headerView.avatarImageView.layer.cornerRadius = 0
                 
                 self.headerView.animationView.transform = CGAffineTransform(scaleX: 1, y: 1)
@@ -179,10 +184,14 @@ extension ProfileViewController {
                 self.headerView.avatarImageView.transform = originalTransform
                 self.headerView.avatarImageView.frame = CGRect(x: 16, y: 16, width: 110, height: 110)
                 self.headerView.avatarImageView.layer.cornerRadius = 55
+                self.headerView.avatarImageView.layer.borderWidth = 3
                 
                 self.headerView.animationView.frame = CGRect(x: 16, y: 16, width: 110, height: 110)
                 self.headerView.animationView.transform = CGAffineTransform(scaleX: 1, y: 1)
                 self.headerView.animationView.alpha = 0
+                
+                self.tableView.allowsSelection = true
+                self.tableView.isScrollEnabled = true
             }
         })
     }
